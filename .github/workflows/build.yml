@@ -1,0 +1,28 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore PhoenixEpubReader.sln
+
+    - name: Build
+      run: dotnet build PhoenixEpubReader.sln --no-restore --configuration Release
+
+    - name: Test
+      run: dotnet test PhoenixEpubReader.sln --no-build --configuration Release --verbosity normal

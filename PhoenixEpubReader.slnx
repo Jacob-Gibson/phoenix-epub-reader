@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Phoenix.Core/Phoenix.Core.csproj" />
+    <Project Path="src/Phoenix.Data/Phoenix.Data.csproj" />
+    <Project Path="src/Phoenix.UI.WPF/Phoenix.UI.WPF.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Phoenix.Core.Tests/Phoenix.Core.Tests.csproj" />
+  </Folder>
+</Solution>
