@@ -53,4 +53,10 @@ public partial class MainWindow : Window
             viewModel.OnSettingsChanged();
         }
     }
+
+    private void CloseSettingsPopup(object sender, RoutedEventArgs e)
+    {
+        // Close the settings popup when navigating to full settings
+        SettingsToggle.IsChecked = false;
+    }
 }

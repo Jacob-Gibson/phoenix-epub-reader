@@ -46,7 +46,7 @@ public static class ThemeManager
     /// <summary>
     /// Gets the current theme based on settings.
     /// </summary>
-    public static ReaderTheme CurrentTheme { get; private set; } = ReaderTheme.Light;
+    public static ReaderTheme CurrentTheme { get; private set; } = ReaderTheme.Default;
 
     /// <summary>
     /// Sets the current theme and applies it.

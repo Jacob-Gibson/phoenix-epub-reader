@@ -51,6 +51,114 @@
                 
                 <!-- Navigation and Actions -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <!-- Debug Mode Toggle (only visible when enabled in settings) -->
+                    <ToggleButton x:Name="DebugToggle"
+                                  Content="🔧" 
+                                  ToolTip="Debug Mode"
+                                  Visibility="{Binding IsDebugModeEnabled, Converter={StaticResource BoolToVisibilityConverter}}"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  Foreground="{DynamicResource TextSecondaryBrush}" 
+                                  FontSize="14" Padding="8,4"
+                                  Cursor="Hand"/>
+                    
+                    <Popup IsOpen="{Binding IsChecked, ElementName=DebugToggle, Mode=TwoWay}"
+                           PlacementTarget="{Binding ElementName=DebugToggle}"
+                           Placement="Bottom"
+                           StaysOpen="False"
+                           AllowsTransparency="True">
+                        <Border Background="{DynamicResource SurfaceBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Padding="12"
+                                Margin="0,4,0,0"
+                                MinWidth="280">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.2"/>
+                            </Border.Effect>
+                            <StackPanel>
+                                <!-- Header -->
+                                <TextBlock Text="🔧 Debug Mode" 
+                                           FontWeight="SemiBold" FontSize="14"
+                                           Foreground="{DynamicResource TextPrimaryBrush}"
+                                           Margin="0,0,0,12"/>
+                                
+                                <!-- Highlight Stats -->
+                                <Border Background="{DynamicResource BorderBrush}" 
+                                        CornerRadius="4" Padding="10" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="Highlight Statistics" FontWeight="SemiBold" FontSize="12"
+                                                   Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
+                                        <TextBlock FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}">
+                                            <Run Text="Current Chapter: "/>
+                                            <Run Text="{Binding CurrentChapterHighlightCount, Mode=OneWay}" FontWeight="SemiBold"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}">
+                                            <Run Text="Current Book: "/>
+                                            <Run Text="{Binding CurrentBookHighlightCount, Mode=OneWay}" FontWeight="SemiBold"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}">
+                                            <Run Text="Total in Memory: "/>
+                                            <Run Text="{Binding Highlights.Count, Mode=OneWay}" FontWeight="SemiBold"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <!-- Debug Actions -->
+                                <TextBlock Text="Actions" FontWeight="SemiBold" FontSize="12"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                
+                                <Button Content="🔄 Refresh Highlights" 
+                                        Command="{Binding RefreshHighlightsCommand}"
+                                        ToolTip="Re-apply all highlights to the current chapter"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="8,6" Margin="0,0,0,4"/>
+                                
+                                <Button Content="🧹 Flush Invalid Highlights" 
+                                        Command="{Binding FlushInvalidHighlightsCommand}"
+                                        ToolTip="Remove highlights with missing or invalid data"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="8,6" Margin="0,0,0,4"/>
+                                
+                                <Button Content="🗑️ Clear Chapter Highlights" 
+                                        Command="{Binding ClearChapterHighlightsCommand}"
+                                        ToolTip="Delete all highlights in the current chapter"
+                                        HorizontalAlignment="Stretch"
+                                        Foreground="OrangeRed"
+                                        Padding="8,6" Margin="0,0,0,4"/>
+                                
+                                <Button Content="⚠️ Clear All Book Highlights" 
+                                        Command="{Binding ClearBookHighlightsCommand}"
+                                        ToolTip="Delete ALL highlights in the current book"
+                                        HorizontalAlignment="Stretch"
+                                        Foreground="Red"
+                                        Padding="8,6" Margin="0,0,0,8"/>
+                                
+                                <Separator Margin="0,4,0,8"/>
+                                
+                                <!-- Validation Report -->
+                                <Button Content="📋 Run Validation Report" 
+                                        Command="{Binding ValidateHighlightsCommand}"
+                                        ToolTip="Check all highlights for potential issues"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="8,6" Margin="0,0,0,4"/>
+                                
+                                <Button Content="🔍 Show Debug Info" 
+                                        Command="{Binding ShowHighlightDebugInfoCommand}"
+                                        ToolTip="Show detailed highlight info for debugging"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="8,6" Margin="0,0,0,4"/>
+                                
+                                <Button Content="🧪 Test JS Rendering" 
+                                        Command="{Binding TestHighlightRenderingCommand}"
+                                        ToolTip="Test JavaScript highlight rendering directly"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="8,6"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                    
                     <!-- Bookmarks Dropdown -->
                     <ToggleButton x:Name="BookmarksToggle"
                                   Content="🔖" 

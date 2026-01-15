@@ -41,21 +41,25 @@
                     <TextBlock Text="Theme" FontWeight="Medium" Margin="0,0,0,8"
                                Foreground="{StaticResource TextPrimaryBrush}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                        <RadioButton Content="Light" GroupName="Theme"
-                                     IsChecked="{Binding Settings.Theme, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static models:ReaderTheme.Light}}"
+                        <RadioButton Content="Default" GroupName="Theme"
+                                     IsChecked="{Binding Settings.Theme, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static models:ReaderTheme.Default}}"
+                                     Checked="ThemeRadioButton_Checked"
                                      Margin="0,0,16,0"/>
                         <RadioButton Content="Dark" GroupName="Theme"
                                      IsChecked="{Binding Settings.Theme, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static models:ReaderTheme.Dark}}"
+                                     Checked="ThemeRadioButton_Checked"
                                      Margin="0,0,16,0"/>
                         <RadioButton Content="Sepia" GroupName="Theme"
-                                     IsChecked="{Binding Settings.Theme, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static models:ReaderTheme.Sepia}}"/>
+                                     IsChecked="{Binding Settings.Theme, Converter={StaticResource EnumBoolConverter}, ConverterParameter={x:Static models:ReaderTheme.Sepia}}"
+                                     Checked="ThemeRadioButton_Checked"/>
                     </StackPanel>
                     
                     <!-- Font Family -->
                     <TextBlock Text="Font Family" FontWeight="Medium" Margin="0,0,0,8"
                                Foreground="{StaticResource TextPrimaryBrush}"/>
                     <ComboBox ItemsSource="{Binding AvailableFonts}"
-                              SelectedItem="{Binding Settings.FontFamily}"
+                              SelectedItem="{Binding Settings.FontFamily, Mode=TwoWay}"
+                              SelectionChanged="SettingsComboBox_SelectionChanged"
                               Width="200" HorizontalAlignment="Left"
                               Margin="0,0,0,16"/>
                     
@@ -64,7 +68,8 @@
                                Foreground="{StaticResource TextPrimaryBrush}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
                         <ComboBox ItemsSource="{Binding AvailableFontSizes}"
-                                  SelectedItem="{Binding Settings.FontSize}"
+                                  SelectedItem="{Binding Settings.FontSize, Mode=TwoWay}"
+                                  SelectionChanged="SettingsComboBox_SelectionChanged"
                                   Width="100"/>
                         <TextBlock Text="px" VerticalAlignment="Center" Margin="8,0,0,0"
                                    Foreground="{StaticResource TextSecondaryBrush}"/>
@@ -74,7 +79,8 @@
                     <TextBlock Text="Line Height" FontWeight="Medium" Margin="0,0,0,8"
                                Foreground="{StaticResource TextPrimaryBrush}"/>
                     <ComboBox ItemsSource="{Binding AvailableLineHeights}"
-                              SelectedItem="{Binding Settings.LineHeight}"
+                              SelectedItem="{Binding Settings.LineHeight, Mode=TwoWay}"
+                              SelectionChanged="SettingsComboBox_SelectionChanged"
                               Width="100" HorizontalAlignment="Left"
                               Margin="0,0,0,16"/>
                     
@@ -83,7 +89,8 @@
                                Foreground="{StaticResource TextPrimaryBrush}"/>
                     <StackPanel Orientation="Horizontal">
                         <ComboBox ItemsSource="{Binding AvailableMargins}"
-                                  SelectedItem="{Binding Settings.MarginSize}"
+                                  SelectedItem="{Binding Settings.MarginSize, Mode=TwoWay}"
+                                  SelectionChanged="SettingsComboBox_SelectionChanged"
                                   Width="100"/>
                         <TextBlock Text="px" VerticalAlignment="Center" Margin="8,0,0,0"
                                    Foreground="{StaticResource TextSecondaryBrush}"/>
@@ -100,25 +107,45 @@
                                Margin="0,0,0,16"/>
                     
                     <CheckBox Content="Remember reading position"
-                              IsChecked="{Binding Settings.RememberPosition}"
+                              IsChecked="{Binding Settings.RememberPosition, Mode=TwoWay}"
+                              Checked="SettingsCheckBox_Changed"
+                              Unchecked="SettingsCheckBox_Changed"
                               Margin="0,0,0,12"/>
                     
                     <CheckBox Content="Show sidebar by default"
-                              IsChecked="{Binding Settings.SidebarVisible}"/>
+                              IsChecked="{Binding Settings.SidebarVisible, Mode=TwoWay}"
+                              Checked="SettingsCheckBox_Changed"
+                              Unchecked="SettingsCheckBox_Changed"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Advanced Section -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="Advanced" 
+                               FontSize="16" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,0,0,16"/>
+                    
+                    <CheckBox Content="Enable debug mode"
+                              IsChecked="{Binding Settings.DebugModeEnabled, Mode=TwoWay}"
+                              Checked="SettingsCheckBox_Changed"
+                              Unchecked="SettingsCheckBox_Changed"
+                              Margin="0,0,0,8"/>
+                    <TextBlock Text="Shows debugging tools in the reader toolbar for troubleshooting highlights and other features."
+                               FontSize="11"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               TextWrapping="Wrap"
+                               Margin="20,0,0,0"/>
                 </StackPanel>
             </Border>
             
             <!-- Actions -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Reset to Defaults" 
-                        Command="{Binding ResetSettingsCommand}"
-                        Style="{StaticResource IconButtonStyle}"
-                        Padding="16,8" Margin="0,0,12,0"/>
-                
-                <Button Content="Save Settings" 
-                        Command="{Binding SaveSettingsCommand}"
-                        Style="{StaticResource PrimaryButtonStyle}"/>
-            </StackPanel>
+            <Button Content="Reset to Defaults" 
+                    Command="{Binding ResetSettingsCommand}"
+                    Style="{StaticResource IconButtonStyle}"
+                    HorizontalAlignment="Right"
+                    Padding="16,8"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

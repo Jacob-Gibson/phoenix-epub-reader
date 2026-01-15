@@ -33,7 +33,7 @@ public class UserSettings
     /// <summary>
     /// The current theme.
     /// </summary>
-    public ReaderTheme Theme { get; set; } = ReaderTheme.Light;
+    public ReaderTheme Theme { get; set; } = ReaderTheme.Default;
 
     /// <summary>
     /// The path to the last opened book.
@@ -59,6 +59,11 @@ public class UserSettings
     /// The default library folder path.
     /// </summary>
     public string? LibraryPath { get; set; }
+
+    /// <summary>
+    /// Whether debug mode is enabled in the reader.
+    /// </summary>
+    public bool DebugModeEnabled { get; set; } = false;
 }
 
 /// <summary>
@@ -68,10 +73,8 @@ public enum ReaderTheme
 {
     /// <summary>Use the ePub's native styling.</summary>
     Default = 0,
-    /// <summary>Light theme with white background.</summary>
-    Light = 1,
     /// <summary>Dark theme with dark background.</summary>
-    Dark = 2,
+    Dark = 1,
     /// <summary>Sepia theme for reduced eye strain.</summary>
-    Sepia = 3
+    Sepia = 2
 }

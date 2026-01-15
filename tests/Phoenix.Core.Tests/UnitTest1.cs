@@ -83,7 +83,7 @@ public class UserSettingsTests
         Assert.Equal("Segoe UI", settings.FontFamily);
         Assert.Equal(16, settings.FontSize);
         Assert.Equal(1.6, settings.LineHeight);
-        Assert.Equal(ReaderTheme.Light, settings.Theme);
+        Assert.Equal(ReaderTheme.Default, settings.Theme);
         Assert.True(settings.RememberPosition);
     }
 }

@@ -15,11 +15,10 @@ public partial class SettingsViewModel : ObservableObject
     private readonly ISettingsService _settingsService;
     private readonly MainViewModel _mainViewModel;
 
-    [ObservableProperty]
-    private UserSettings? _settings;
-
-    [ObservableProperty]
-    private bool _hasChanges;
+    /// <summary>
+    /// Gets the settings from the main view model (shared instance).
+    /// </summary>
+    public UserSettings? Settings => _mainViewModel.Settings;
 
     public List<string> AvailableFonts { get; } =
     [
@@ -56,50 +55,38 @@ public partial class SettingsViewModel : ObservableObject
         _mainViewModel = mainViewModel;
     }
 
-    public async Task LoadSettingsAsync()
+    /// <summary>
+    /// Refreshes the Settings property binding.
+    /// </summary>
+    public void RefreshSettings()
     {
-        Settings = await _settingsService.GetSettingsAsync();
-        HasChanges = false;
+        OnPropertyChanged(nameof(Settings));
     }
 
-    [RelayCommand]
-    private void SetTheme(ReaderTheme theme)
-    {
-        if (Settings != null)
-        {
-            Settings.Theme = theme;
-            HasChanges = true;
-            OnPropertyChanged(nameof(Settings));
-        }
-    }
-
-    [RelayCommand]
-    private async Task SaveSettingsAsync()
+    /// <summary>
+    /// Saves settings and notifies the main view model.
+    /// </summary>
+    public async Task SaveAndApplyAsync()
     {
         if (Settings != null)
         {
             await _settingsService.SaveSettingsAsync(Settings);
-            _mainViewModel.Settings = Settings;
-            HasChanges = false;
+            _mainViewModel.OnSettingsChanged();
         }
     }
 
     [RelayCommand]
     private async Task ResetSettingsAsync()
     {
-        Settings = await _settingsService.ResetSettingsAsync();
-        _mainViewModel.Settings = Settings;
-        HasChanges = false;
+        var defaultSettings = await _settingsService.ResetSettingsAsync();
+        _mainViewModel.Settings = defaultSettings;
+        OnPropertyChanged(nameof(Settings));
+        _mainViewModel.OnSettingsChanged();
     }
 
     [RelayCommand]
     private void GoBack()
     {
         _mainViewModel.ShowLibraryCommand.Execute(null);
-    }
-
-    partial void OnSettingsChanged(UserSettings? value)
-    {
-        HasChanges = true;
     }
 }

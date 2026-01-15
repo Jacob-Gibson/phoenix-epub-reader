@@ -49,14 +49,15 @@ public partial class MainViewModel : ObservableObject
         ISettingsService settingsService,
         IEpubParser epubParser,
         IBookmarkService bookmarkService,
-        IReadingProgressService progressService)
+        IReadingProgressService progressService,
+        IHighlightService highlightService)
     {
         _libraryService = libraryService;
         _settingsService = settingsService;
         _epubParser = epubParser;
 
         LibraryViewModel = new LibraryViewModel(libraryService, this);
-        ReaderViewModel = new ReaderViewModel(epubParser, bookmarkService, progressService, this);
+        ReaderViewModel = new ReaderViewModel(epubParser, bookmarkService, progressService, highlightService, this);
         SettingsViewModel = new SettingsViewModel(settingsService, this);
 
         CurrentView = LibraryViewModel;
@@ -116,9 +117,8 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ShowSettings()
     {
-        // Settings is now a popup, but keep this for compatibility
         IsReading = false;
-        CurrentView = LibraryViewModel;
+        CurrentView = SettingsViewModel;
     }
 
     [RelayCommand]

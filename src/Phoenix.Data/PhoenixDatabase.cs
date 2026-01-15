@@ -34,6 +34,11 @@ public class PhoenixDatabase : IDisposable
     public ILiteCollection<UserSettings> Settings => _database.GetCollection<UserSettings>("settings");
 
     /// <summary>
+    /// Gets the Highlights collection.
+    /// </summary>
+    public ILiteCollection<Highlight> Highlights => _database.GetCollection<Highlight>("highlights");
+
+    /// <summary>
     /// Initializes a new instance of the PhoenixDatabase.
     /// </summary>
     /// <param name="databasePath">The path to the database file. If null, uses the default location.</param>
@@ -80,6 +85,11 @@ public class PhoenixDatabase : IDisposable
 
         // Settings index
         Settings.EnsureIndex(s => s.Id, unique: true);
+
+        // Highlight indexes
+        Highlights.EnsureIndex(h => h.Id, unique: true);
+        Highlights.EnsureIndex(h => h.BookId);
+        Highlights.EnsureIndex(h => h.ContentPath);
     }
 
     public void Dispose()

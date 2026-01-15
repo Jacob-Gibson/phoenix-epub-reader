@@ -176,7 +176,7 @@
             <!-- Empty State -->
             <StackPanel Grid.Row="1" 
                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                        Visibility="{Binding Books.Count, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=Invert}">
+                        Visibility="{Binding Books.Count, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=Invert}">
                 <TextBlock Text="📚" FontSize="64" HorizontalAlignment="Center"/>
                 <TextBlock Text="Your library is empty" 
                            FontSize="18" Margin="0,12,0,8"

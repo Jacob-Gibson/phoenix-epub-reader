@@ -57,6 +57,7 @@ public partial class App : Application
         services.AddSingleton<IBookmarkService, BookmarkRepository>();
         services.AddSingleton<IReadingProgressService, ReadingProgressRepository>();
         services.AddSingleton<ISettingsService, SettingsRepository>();
+        services.AddSingleton<IHighlightService, HighlightRepository>();
 
         // ViewModels
         services.AddSingleton<MainViewModel>();
