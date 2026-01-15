@@ -121,7 +121,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Roadmap
 
 - [ ] Full-text search within books
-- [ ] Annotations and highlights
+- [x] Annotations and highlights
 - [ ] Export bookmarks and notes
 - [ ] Reading statistics
 - [ ] Keyboard shortcuts
