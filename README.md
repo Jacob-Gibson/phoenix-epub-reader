@@ -15,6 +15,7 @@ An open-source ePub reader designed for personal use and built with C# and WPF.
 - **Typography Controls** - Adjust font, size, line height, and margins
 - **Search** - Search your library by title or author
 - **Drag & Drop** - Simply drag ePub files into the app to import
+- **Highlighting & Notes** - Select and right click to add highlight text and add notes
 
 ## Screenshots
 
