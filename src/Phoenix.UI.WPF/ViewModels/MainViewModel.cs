@@ -35,7 +35,7 @@ public partial class MainViewModel : ObservableObject
     private string _statusMessage = "Ready";
 
     [ObservableProperty]
-    private bool _isSidebarVisible = true;
+    private bool _isSidebarVisible = false;
 
     [ObservableProperty]
     private bool _isReading;
@@ -89,7 +89,8 @@ public partial class MainViewModel : ObservableObject
         try
         {
             Settings = await _settingsService.GetSettingsAsync();
-            IsSidebarVisible = Settings.SidebarVisible;
+            // Don't show sidebar on startup - only when reading a book
+            // IsSidebarVisible will be set when IsReading changes to true
             
             // Apply the saved theme to the application UI
             ThemeManager.SetTheme(Settings.Theme);
